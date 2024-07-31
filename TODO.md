@@ -1,4 +1,4 @@
-- [ ] Create database
+- [x] Create database
 - [ ] Successfully connect database
 - [ ] Implement CRUD API operations
 
