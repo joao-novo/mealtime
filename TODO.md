@@ -1,5 +1,5 @@
 - [x] Create database
-- [ ] Successfully connect database
+- [x] Successfully connect database
 - [ ] Implement CRUD API operations
 
 - [ ] Implement shopping cart structure
