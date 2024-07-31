@@ -19,6 +19,7 @@
 - [ ] Implement tests for shopping cart
   - [ ] Pass tests for shopping cart
 - [ ] Implement tests for order submission and payment
+  - [ ] Pass tests for order submission and payment
 
 ### Maybe?
 
