@@ -4,6 +4,7 @@ use std::io;
 
 pub mod api;
 pub mod structs;
+
 fn handle_commands(db: &Database, command: String) {
     todo!();
 }
