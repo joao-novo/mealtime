@@ -1,5 +1,3 @@
-use rusqlite::MappedRows;
-
 use crate::structs::{Database, Item};
 
 impl Database {
@@ -49,6 +47,10 @@ impl Database {
     fn get_item_by_name(&self, name: String) -> Item {
         todo!();
     }
+
+    fn update_item(&self, old_name: String, new_item: Item) {
+        todo!();
+    }
 }
 
 #[cfg(test)]
@@ -63,14 +65,8 @@ mod tests {
             price: 5.99,
             time_to_prepare: 6,
         });
-        let mut stmt = db
-            .connection
-            .prepare("SELECT ITEM.NAME from MENU ITEM;")
-            .unwrap();
-        let items = stmt
-            .query_map([], |row| Ok(row.get::<usize, String>(0)?))
-            .unwrap();
-        assert_eq!(String::from("Salad"), items.last().unwrap().unwrap());
+        let items = db.get_items();
+        assert_eq!(String::from("Salad"), items.last().unwrap().name);
     }
 
     #[test]
@@ -83,11 +79,7 @@ mod tests {
         }
         assert_eq!(
             names,
-            vec![
-                String::from("Burger"),
-                String::from("Fries"),
-                String::from("Salad")
-            ]
+            vec![String::from("Burger"), String::from("Small Fries"),]
         );
     }
 }
