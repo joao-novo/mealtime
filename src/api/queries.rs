@@ -1,3 +1,5 @@
+use rusqlite::MappedRows;
+
 use crate::structs::{Database, Item};
 
 impl Database {
@@ -19,11 +21,32 @@ impl Database {
         todo!();
     }
 
-    fn get_items(&self) {
-        todo!();
+    fn get_items(&self) -> Vec<Item> {
+        let mut stmt = match self.connection.prepare("SELECT * FROM MENU ITEM;") {
+            Ok(stmt) => stmt,
+            Err(e) => panic!("{e}: Could not retrieve items."),
+        };
+
+        let items = match stmt.query_map([], |row| {
+            Ok(Item {
+                name: row.get(1)?,
+                price: row.get(2)?,
+                time_to_prepare: row.get(3)?,
+            })
+        }) {
+            Ok(item) => item,
+            Err(e) => panic!("{e}"),
+        };
+
+        let mut result = Vec::new();
+
+        for item in items {
+            result.push(item.unwrap());
+        }
+        result
     }
 
-    fn get_item_by_name(&self, name: String) {
+    fn get_item_by_name(&self, name: String) -> Item {
         todo!();
     }
 }
@@ -48,5 +71,23 @@ mod tests {
             .query_map([], |row| Ok(row.get::<usize, String>(0)?))
             .unwrap();
         assert_eq!(String::from("Salad"), items.last().unwrap().unwrap());
+    }
+
+    #[test]
+    fn test_get_items() {
+        let db = handle_database_connection();
+        let items = db.get_items();
+        let mut names = Vec::new();
+        for item in items {
+            names.push(item.name);
+        }
+        assert_eq!(
+            names,
+            vec![
+                String::from("Burger"),
+                String::from("Fries"),
+                String::from("Salad")
+            ]
+        );
     }
 }
