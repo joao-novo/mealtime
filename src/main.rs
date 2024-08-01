@@ -1,7 +1,9 @@
-use crate::api::database::{handle_database_connection, Database};
+use crate::api::database::handle_database_connection;
+use crate::structs::Database;
 use std::io;
 
 pub mod api;
+pub mod structs;
 fn handle_commands(db: &Database, command: String) {
     todo!();
 }

@@ -1,8 +1,5 @@
+use crate::structs::Database;
 use rusqlite::Connection;
-
-pub struct Database {
-    pub connection: Connection,
-}
 
 pub fn handle_database_connection() -> Database {
     match Connection::open("./db/menu.db") {
