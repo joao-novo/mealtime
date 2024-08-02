@@ -1,6 +1,7 @@
 - [x] Create database
 - [x] Successfully connect database
 - [ ] Implement CRUD API operations
+  - [ ] Only allow unique names
 
 - [ ] Implement shopping cart structure
 - [ ] Allow users to look through menu
