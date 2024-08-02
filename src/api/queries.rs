@@ -17,7 +17,13 @@ impl Database {
     }
 
     fn remove_item(&self, name: String) {
-        todo!();
+        match self
+            .connection
+            .execute("DELETE FROM MENU WHERE NAME = ?1", &[&name])
+        {
+            Ok(_) => println!("Item {name} removed from menu."),
+            Err(e) => panic!("{e}: Could not remove item from menu."),
+        }
     }
 
     fn get_items(&self) -> HashMap<String, ItemHashEntry> {
@@ -80,11 +86,34 @@ impl Database {
 
 #[cfg(test)]
 mod tests {
-    use crate::{api::database::handle_database_connection, structs::Item};
+    use crate::{
+        api::database::handle_database_connection,
+        structs::{Database, Item},
+    };
+    use rusqlite::Connection;
+
+    fn setup_db() -> Database {
+        let conn = Connection::open_in_memory();
+        let db = Database {
+            connection: conn.unwrap(),
+        };
+        db.connection
+            .execute(
+                "CREATE TABLE MENU (
+                ID INT PRIMARY KEY,
+                NAME TEXT NOT NULL,
+                PRICE REAL NOT NULL,
+                TIME_TO_PREPARE INT NOT NULL
+            );",
+                [],
+            )
+            .unwrap();
+        db
+    }
 
     #[test]
     fn test_add_item() {
-        let db = handle_database_connection();
+        let db = setup_db();
         db.add_item(&Item {
             name: String::from("Salad"),
             price: 5.99,
@@ -95,15 +124,43 @@ mod tests {
     }
 
     #[test]
+    fn test_remove_item() {
+        let db = setup_db();
+        db.add_item(&Item {
+            name: String::from("Burger"),
+            price: 4.99,
+            time_to_prepare: 5,
+        });
+        db.remove_item(String::from("Burger"));
+        let items = db.get_items();
+        assert!(!items.contains_key("Burger"));
+    }
+
+    #[test]
     fn test_get_items() {
-        let db = handle_database_connection();
+        let db = setup_db();
+        db.add_item(&Item {
+            name: String::from("Burger"),
+            price: 4.99,
+            time_to_prepare: 5,
+        });
+        db.add_item(&Item {
+            name: String::from("Small Fries"),
+            price: 3.99,
+            time_to_prepare: 4,
+        });
         let items = db.get_items();
         assert!(items.contains_key("Burger") && items.contains_key("Small Fries"));
     }
 
     #[test]
     fn test_get_item_by_name() {
-        let db = handle_database_connection();
+        let db = setup_db();
+        db.add_item(&Item {
+            name: String::from("Burger"),
+            price: 4.99,
+            time_to_prepare: 5,
+        });
         let item = db.get_item_by_name(String::from("Burger"));
         assert!(item.name == String::from("Burger"));
     }
