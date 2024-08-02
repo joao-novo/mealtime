@@ -9,3 +9,8 @@ pub struct Item {
     pub price: f32,
     pub time_to_prepare: u32,
 }
+
+pub struct ItemHashEntry {
+    pub price: f32,
+    pub time_to_prepare: u32,
+}
