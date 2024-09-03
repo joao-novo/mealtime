@@ -1,6 +1,7 @@
-- [ ] Create database
-- [ ] Successfully connect database
-- [ ] Implement CRUD API operations
+- [x] Create database
+- [x] Successfully connect database
+- [x] Implement CRUD API operations
+  - [ ] Only allow unique names
 
 - [ ] Implement shopping cart structure
 - [ ] Allow users to look through menu
@@ -12,13 +13,15 @@
 
 ### Testing
 
-- [ ] Implement tests for database and API
-  - [ ] Pass tests for database and API
+- [x] Implement tests for database and API
+  - [x] Pass tests for database and API
+  - [ ] Implement edge case tests
 - [ ] Implement tests for menu
   - [ ] Pass tests for menu
 - [ ] Implement tests for shopping cart
   - [ ] Pass tests for shopping cart
 - [ ] Implement tests for order submission and payment
+  - [ ] Pass tests for order submission and payment
 
 ### Maybe?
 

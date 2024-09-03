@@ -1,6 +1,5 @@
-main
-
-
 # Added by cargo
 
 /target
+
+shell.nix
