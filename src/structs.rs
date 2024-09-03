@@ -5,7 +5,6 @@ pub struct Database {
 }
 
 pub struct Item {
-    pub id: String,
     pub name: String,
     pub price: f32,
     pub time_to_prepare: u32,
