@@ -1,4 +1,4 @@
-use rusqlite::{params, Error};
+use rusqlite::params;
 
 use crate::structs::{Database, Item, ItemHashEntry};
 use std::collections::HashMap;
